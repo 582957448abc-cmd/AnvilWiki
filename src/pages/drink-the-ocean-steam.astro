@@ -1,0 +1,218 @@
+---
+import BaseLayout from '~/components/layout/BaseLayout.astro';
+import { siteUrl } from '~/config/site';
+import { guide } from '~/content/specials/drink-the-ocean';
+---
+
+<BaseLayout
+  locale="en"
+  title={guide.title}
+  titleSuffix=""
+  description={guide.description}
+  image={new URL(guide.media + 'poster.webp', siteUrl).href}
+>
+  <main class="ocean" data-pagefind-body>
+    <nav aria-label="On this page">
+      <a href="#preview">Gameplay</a>
+      <a href="#how-to-play">How to play</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <header>
+      <h1>{guide.heading}</h1>
+      <p class="answer">No Steam release has been confirmed.</p>
+      <p>Mana lists a desktop browser edition. Check the official page for current availability.</p>
+    </header>
+    <div class="overview">
+      <section id="preview" aria-labelledby="preview-title">
+        <h2 id="preview-title">Gameplay preview</h2>
+        <video
+          controls
+          playsinline
+          preload="none"
+          poster={guide.media + 'poster.webp'}
+          aria-label="Drink the Ocean gameplay preview"
+        >
+          <source src={guide.media + 'gameplay.mp4'} type="video/mp4" />
+          <a href={guide.media + 'gameplay.mp4'}>Open the gameplay video</a>
+        </video>
+        <p class="note">Recorded footage. Interactive play is unavailable on this guide.</p>
+      </section>
+      <section class="status" aria-labelledby="status-title">
+        <h2 id="status-title">Platform & release status</h2>
+        <dl>
+          {
+            guide.status.map(([label, value]) => (
+              <div>
+                <>
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </>
+              </div>
+            ))
+          }
+        </dl>
+        <a class="official" href={guide.official}>Check on Mana <span aria-hidden="true">↗</span></a
+        >
+      </section>
+    </div>
+    <section id="how-to-play" class="section">
+      <h2>How to Play the Drink the Ocean Game</h2>
+      <ol>
+        {
+          guide.steps.map(([title, body]) => (
+            <li>
+              <>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="note">
+        For your first upgrade, alternate between drinking and checking exposed ground for treasure.
+        Upgrade timing depends on what you find.
+      </p>
+    </section>
+    <section id="faq" class="section">
+      <h2>Frequently asked questions</h2>
+      {
+        guide.faq.map(([question, answer]) => (
+          <details>
+            <>
+              <summary>{question}</summary>
+              <p>{answer}</p>
+            </>
+          </details>
+        ))
+      }
+    </section>
+    <footer>
+      Independent game guide.
+      <a href={guide.official}>Official game page</a>
+      <a href="https://mana.gs/about">Mana platform information</a>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  .ocean {
+    max-width: 75rem;
+    margin: auto;
+    padding: 0 clamp(1rem, 4vw, 3rem) 3rem;
+  }
+  nav {
+    display: flex;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  nav a,
+  footer a {
+    color: var(--brand-text);
+    font-weight: 650;
+  }
+  header {
+    padding: clamp(2rem, 6vw, 5rem) 0 2rem;
+  }
+  h1 {
+    font-size: clamp(2.75rem, 7vw, 5.6rem);
+    font-weight: 850;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    margin-bottom: 1.1rem;
+  }
+  h2 {
+    font-size: clamp(1.25rem, 3vw, 1.9rem);
+    font-weight: 750;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .answer {
+    font-size: clamp(1.2rem, 3vw, 1.65rem);
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+  .overview {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+    gap: 1.3rem;
+    align-items: start;
+  }
+  .overview section,
+  .section {
+    padding: clamp(1rem, 3vw, 1.65rem);
+    border: 1px solid hsl(var(--border));
+    border-radius: 1rem;
+    background: hsl(var(--card));
+  }
+  video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: contain;
+    background: hsl(var(--foreground));
+    border-radius: 0.65rem;
+  }
+  .note {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: hsl(var(--muted-foreground));
+  }
+  dl div {
+    border-top: 1px solid hsl(var(--border));
+    padding: 0.6rem 0;
+  }
+  dt {
+    font-size: 0.85rem;
+    color: hsl(var(--muted-foreground));
+  }
+  dd {
+    font-weight: 650;
+  }
+  .official {
+    display: inline-block;
+    margin-top: 0.8rem;
+    padding: 0.65rem 1rem;
+    border: 1px solid currentColor;
+    border-radius: 0.55rem;
+    color: var(--brand-text);
+    font-weight: 700;
+  }
+  .section {
+    margin-top: 1.3rem;
+  }
+  ol {
+    list-style: decimal;
+    padding-left: 1.4rem;
+    display: grid;
+    gap: 0.8rem;
+  }
+  h3,
+  summary {
+    font-weight: 700;
+  }
+  details {
+    padding: 0.8rem 0;
+    border-top: 1px solid hsl(var(--border));
+  }
+  details p {
+    margin: 0.5rem 0 0;
+  }
+  summary {
+    cursor: pointer;
+  }
+  footer {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+  }
+  @media (max-width: 720px) {
+    .overview {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
