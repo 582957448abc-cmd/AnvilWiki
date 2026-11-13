@@ -26,8 +26,12 @@ import { guide } from '~/content/specials/drink-the-ocean';
       <img src={guide.media + 'cover.webp'} alt="" fetchpriority="high" />
       <div class="panel">
         <h1>Drink The Ocean</h1>
-        <p class="label">Loading screen preview</p>
-        <div class="track" aria-hidden="true"></div>
+        <div class="progress-header">
+          <p class="label" id="preview-label" role="status">Loading screen preview</p>
+          <span class="percentage" data-percentage aria-hidden="true">0%</span>
+        </div>
+        <progress class="track" max="100" value="0" aria-labelledby="preview-label"></progress>
+        <p class="remaining" data-remaining aria-hidden="true">3:00 remaining</p>
         <p class="description">
           This preview shows the player layout. The game will appear here when an embeddable build
           is available.
@@ -35,6 +39,27 @@ import { guide } from '~/content/specials/drink-the-ocean';
       </div>
     </main>
     <script is:inline>
+      const progress = document.querySelector('.track');
+      const percentage = document.querySelector('[data-percentage]');
+      const remaining = document.querySelector('[data-remaining]');
+      const label = document.getElementById('preview-label');
+      const duration = 180_000;
+      const startedAt = performance.now();
+      const timer = setInterval(() => {
+        const elapsed = Math.min(duration, performance.now() - startedAt);
+        const percent = (elapsed / duration) * 100;
+        const seconds = Math.ceil((duration - elapsed) / 1000);
+        progress.value = percent;
+        percentage.textContent = `${Math.floor(percent)}%`;
+        remaining.textContent = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')} remaining`;
+
+        if (elapsed === duration) {
+          clearInterval(timer);
+          label.textContent = 'Preview complete';
+          remaining.hidden = true;
+        }
+      }, 200);
+
       const fullscreenButton = document.querySelector('[data-fullscreen]');
       if (!document.fullscreenEnabled) {
         fullscreenButton.hidden = true;
@@ -153,32 +178,48 @@ import { guide } from '~/content/specials/drink-the-ocean';
     margin: 1rem 0 0;
     font-size: 0.9rem;
   }
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    text-align: left;
+  }
+  .percentage,
+  .remaining {
+    font-variant-numeric: tabular-nums;
+  }
+  .percentage {
+    color: #ffab77;
+    font-weight: 750;
+  }
+  .remaining {
+    margin: 0.5rem 0 0;
+    color: #c2d9dd;
+    font-size: 0.8rem;
+    text-align: right;
+  }
   .track {
+    appearance: none;
+    display: block;
+    width: 100%;
     height: 7px;
+    border: 0;
     border-radius: 10px;
     background: #416374;
+    accent-color: #ffab77;
     overflow: hidden;
   }
-  .track::before {
-    content: '';
-    display: block;
-    width: 26%;
-    height: 100%;
-    border-radius: inherit;
+  .track::-webkit-progress-bar {
+    background: #416374;
+    border-radius: 10px;
+  }
+  .track::-webkit-progress-value {
     background: #ffab77;
-    animation: loading 1.45s ease-in-out infinite alternate;
+    border-radius: 10px;
   }
-  @keyframes loading {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(285%);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .track::before {
-      animation: none;
-    }
+  .track::-moz-progress-bar {
+    background: #ffab77;
+    border-radius: 10px;
   }
 </style>
