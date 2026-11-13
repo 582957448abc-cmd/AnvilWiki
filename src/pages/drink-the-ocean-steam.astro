@@ -31,17 +31,27 @@ import { guide } from '~/content/specials/drink-the-ocean';
       </div>
     </header>
     <main class="ocean" data-pagefind-body>
-      <img
-        class="cover"
-        src={guide.media + 'cover.webp'}
-        alt="A striped straw stretches from a rocky shore into an ocean whirlpool"
-        fetchpriority="high"
-      />
+      <section class="hero" aria-labelledby="game-title">
+        <img
+          class="cover"
+          src={guide.media + 'cover.webp'}
+          alt="Illustration of an island explorer drinking from a turquoise lagoon through a striped straw"
+          fetchpriority="high"
+        />
+        <div class="hero-copy">
+          <h1 id="game-title">{guide.heading}</h1>
+          <p class="tagline">Drain an ocean, one sip at a time.</p>
+          <p class="steam-status">Steam release unconfirmed</p>
+          <div class="hero-actions">
+            <a class="play-button" href="./play/" aria-describedby="player-note"
+              >Play Now <span aria-hidden="true">→</span></a
+            >
+            <a class="trailer-link" href="#preview">Watch gameplay</a>
+          </div>
+          <p class="player-note" id="player-note">Loading screen preview</p>
+        </div>
+      </section>
       <aside class="game-panel" aria-label="Game and platform information">
-        <h1>Drink the Ocean <span>Steam</span></h1>
-        <p class="tagline">Drain an ocean, one sip at a time.</p>
-        <a class="play-button" href="./play/" aria-describedby="player-note">Play Now</a>
-        <p class="player-note" id="player-note">Loading screen preview</p>
         <dl>
           <div><dt>Genre</dt><dd>Incremental</dd></div>
           <div><dt>Input</dt><dd>Keyboard and mouse</dd></div>
@@ -125,135 +135,161 @@ import { guide } from '~/content/specials/drink-the-ocean';
   }
   body {
     margin: 0;
-    background: #111214;
-    color: #f4f4f4;
+    background: #f7f3e9;
+    color: #132f36;
     font:
-      16px/1.6 Arial,
+      16px/1.6 system-ui,
       sans-serif;
   }
   a {
     color: inherit;
-    text-decoration: none;
   }
   .site-bar {
-    border-bottom: 1px solid #292b2f;
+    border-bottom: 1px solid #d5ded7;
   }
   .bar-inner,
   .ocean {
-    max-width: 1280px;
-    width: calc(100% - clamp(32px, 6vw, 80px));
+    width: min(1180px, calc(100% - 40px));
     margin-inline: auto;
   }
   .bar-inner {
-    min-height: 56px;
+    min-height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
   }
   .wordmark {
-    font-size: 1.08rem;
-    font-weight: 800;
-    letter-spacing: -0.035em;
+    font-weight: 850;
+    letter-spacing: -0.04em;
   }
   nav {
     display: flex;
     flex-wrap: wrap;
-    gap: clamp(0.65rem, 2vw, 1.6rem);
-    color: #b9bbc1;
+    justify-content: flex-end;
+    gap: clamp(0.55rem, 3vw, 1.8rem);
     font-size: 0.88rem;
   }
+  nav a,
+  .wordmark {
+    text-decoration: none;
+  }
   nav a:hover {
-    color: #fff;
+    text-decoration: underline;
   }
   .ocean {
+    padding-block: clamp(16px, 3vw, 32px) 45px;
+  }
+  .hero {
+    position: relative;
+    isolation: isolate;
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    gap: 20px clamp(24px, 3vw, 40px);
-    align-items: start;
-    padding-block: 28px 42px;
+    align-items: center;
+    overflow: hidden;
+    min-height: clamp(430px, 49vw, 570px);
+    border-radius: 25px;
+    background: #032538;
+    color: #fff8ea;
+  }
+  .cover,
+  .hero::after {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
   }
   .cover {
-    width: 100%;
-    display: block;
-    aspect-ratio: 16/9;
     object-fit: cover;
-    border-radius: 14px;
-    background: #202225;
   }
-  .game-panel {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    padding-top: 10px;
+  .hero::after {
+    content: '';
+    z-index: -1;
+    background: linear-gradient(90deg, #042638 0%, #042638e0 26%, #04263800 70%);
+  }
+  .hero-copy {
+    padding: clamp(26px, 5vw, 70px);
   }
   h1 {
     max-width: 8em;
-    margin: 0 0 1rem;
-    font-size: clamp(2.65rem, 5.2vw, 5rem);
+    margin: 0;
+    font-size: clamp(3.4rem, 7.2vw, 6.2rem);
     font-weight: 900;
-    line-height: 0.96;
+    line-height: 0.94;
     letter-spacing: -0.075em;
-  }
-  h1 span {
-    display: block;
-    margin-top: 0.7rem;
-    font-size: 0.31em;
-    line-height: 1;
-    letter-spacing: 0.03em;
-    color: #b9bbc1;
+    text-wrap: balance;
   }
   .tagline {
-    color: #b9bbc1;
-    margin: 1.35rem 0 1rem;
+    margin: 1.15rem 0 0.5rem;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+  }
+  .steam-status,
+  .player-note {
+    color: #d5e6e7;
+    font-size: 0.85rem;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.8rem 1.15rem;
+    margin-top: 1.5rem;
   }
   .play-button {
-    min-height: 49px;
-    display: grid;
-    place-items: center;
-    padding: 0.65rem 1rem;
-    border-radius: 12px;
-    background: #f4f4f4;
-    color: #111214;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.25rem;
+    min-height: 50px;
+    padding: 0.7rem 1.1rem;
+    border-radius: 99px;
+    background: #ffab77;
+    color: #252322;
     font-weight: 800;
+    text-decoration: none;
   }
   .play-button:hover {
-    background: #dfe4e8;
+    background: #ffc39d;
+  }
+  .trailer-link {
+    text-underline-offset: 0.22em;
   }
   .player-note {
-    font-size: 0.78rem;
-    color: #b9bbc1;
-    margin: 0.4rem 0 1.1rem;
+    margin: 0.65rem 0 0;
+  }
+  .game-panel {
+    margin-block: 24px 34px;
+    padding: 16px 22px;
+    border: 1px solid #d6e2d9;
+    border-radius: 16px;
+    background: #e7efe7;
   }
   dl {
-    margin: 0;
-    border-bottom: 1px solid #34363b;
-  }
-  dl div {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 1rem;
-    padding: 0.62rem 0;
-    border-top: 1px solid #34363b;
-    font-size: 0.88rem;
+    margin: 0;
   }
   dt {
-    color: #b9bbc1;
+    color: #41615e;
+    font-size: 0.78rem;
   }
   dd {
-    margin: 0;
-    text-align: right;
-    font-weight: 700;
+    margin: 0.2rem 0 0;
+    font-size: 0.9rem;
+    font-weight: 750;
   }
   .editorial {
-    grid-column: 1;
-    min-width: 0;
+    max-width: 760px;
+    margin-inline: auto;
   }
   .section {
-    margin-top: 2.1rem;
+    margin-top: 2.4rem;
   }
   h2 {
     margin: 0 0 0.65rem;
-    font-size: 1.2rem;
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    letter-spacing: -0.035em;
+    line-height: 1.2;
   }
   h3 {
     margin: 0;
@@ -265,23 +301,20 @@ import { guide } from '~/content/specials/drink-the-ocean';
   ol {
     padding-left: 1.3rem;
   }
-  li {
-    padding-left: 0.2rem;
-  }
   .note,
   footer {
-    color: #b9bbc1;
+    color: #41615e;
   }
   video {
     display: block;
     width: 100%;
-    max-height: 480px;
-    background: #090a0b;
-    border-radius: 12px;
+    max-height: 440px;
+    background: #082733;
+    border-radius: 16px;
   }
   details {
-    border-top: 1px solid #34363b;
-    padding: 0.65rem 0;
+    border-top: 1px solid #d2ddd4;
+    padding: 0.75rem 0;
   }
   summary {
     cursor: pointer;
@@ -291,29 +324,31 @@ import { guide } from '~/content/specials/drink-the-ocean';
     margin: 0.45rem 0 0;
   }
   footer {
-    grid-column: 1 / -1;
+    margin-top: 2rem;
     padding-top: 1rem;
-    border-top: 1px solid #34363b;
+    border-top: 1px solid #d2ddd4;
     font-size: 0.85rem;
   }
-  @media (max-width: 760px) {
+  @media (max-width: 680px) {
+    .bar-inner,
     .ocean {
-      grid-template-columns: minmax(0, 1fr);
-      padding-top: 16px;
+      width: calc(100% - 24px);
     }
-    .game-panel,
-    .editorial {
-      grid-column: 1;
-      grid-row: auto;
+    .bar-inner {
+      gap: 0.5rem;
     }
-    .game-panel {
-      padding-top: 0;
+    .hero {
+      align-items: end;
+      min-height: 515px;
+    }
+    .cover {
+      object-position: 72% center;
+    }
+    .hero::after {
+      background: linear-gradient(0deg, #042638 9%, #042638e3 36%, #04263800 78%);
     }
     h1 {
-      max-width: none;
-    }
-    h1 span {
-      display: inline;
+      font-size: clamp(2.9rem, 12vw, 4.7rem);
     }
   }
 </style>

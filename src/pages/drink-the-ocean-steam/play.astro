@@ -61,42 +61,42 @@ import { guide } from '~/content/specials/drink-the-ocean';
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
-    background: #111214;
-    color: #f6f7f9;
+    background: #062736;
+    color: #f7f3e9;
     font:
       16px/1.5 system-ui,
       sans-serif;
   }
   header {
-    height: 44px;
+    min-height: 58px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 12px;
-    border-bottom: 1px solid #2d3034;
+    padding-inline: clamp(14px, 4vw, 48px);
   }
   header a,
   button {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #c2c6ce;
+    color: #e0eeec;
     text-decoration: none;
     font: inherit;
     font-weight: 650;
   }
   button {
     background: transparent;
-    border: 0;
+    border: 1px solid #51717c;
+    border-radius: 50%;
     cursor: pointer;
-    padding: 6px;
+    padding: 9px;
   }
   button[hidden] {
     display: none;
   }
   svg {
-    width: 19px;
-    height: 19px;
+    width: 18px;
+    height: 18px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.7;
@@ -108,8 +108,9 @@ import { guide } from '~/content/specials/drink-the-ocean';
     isolation: isolate;
     flex: 1;
     display: grid;
-    align-items: end;
-    padding: clamp(22px, 4.5vw, 60px);
+    place-items: center;
+    padding: 24px;
+    overflow: hidden;
   }
   main img,
   main::after {
@@ -121,33 +122,41 @@ import { guide } from '~/content/specials/drink-the-ocean';
   }
   main img {
     object-fit: cover;
+    object-position: 68% center;
   }
   main::after {
     content: '';
     z-index: -1;
-    background: linear-gradient(180deg, transparent 25%, #11121444 50%, #111214 96%);
+    background: #031e3090;
   }
   .panel {
-    width: min(100%, 34rem);
+    width: min(100%, 29rem);
+    text-align: center;
+    padding: clamp(26px, 5vw, 50px);
+    border: 1px solid #c8e6e753;
+    border-radius: 22px;
+    background: #092b39f0;
+    box-shadow: 0 16px 65px #00121f60;
   }
   h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1;
-    letter-spacing: -0.05em;
-    margin: 0 0 2rem;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.06em;
+    margin: 0 0 1.1rem;
   }
   .label {
     font-weight: 700;
-    margin: 0 0 0.65rem;
+    margin: 0 0 0.7rem;
   }
   .description {
-    color: #c2c6ce;
+    color: #c2d9dd;
     margin: 1rem 0 0;
+    font-size: 0.9rem;
   }
   .track {
-    height: 4px;
+    height: 7px;
     border-radius: 10px;
-    background: #34373c;
+    background: #416374;
     overflow: hidden;
   }
   .track::before {
@@ -156,7 +165,7 @@ import { guide } from '~/content/specials/drink-the-ocean';
     width: 26%;
     height: 100%;
     border-radius: inherit;
-    background: #f6f7f9;
+    background: #ffab77;
     animation: loading 1.45s ease-in-out infinite alternate;
   }
   @keyframes loading {
