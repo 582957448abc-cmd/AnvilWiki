@@ -226,7 +226,7 @@ function decodeSitemapPath(url: string): string {
   }
 }
 
-const noindexPaths = new Set<string>();
+const noindexPaths = new Set<string>(['/drink-the-ocean-steam/play']);
 const localeCoverage = new Map<string, Set<string>>();
 const detailCoverage = new Map<string, Set<string>>();
 const categoryCoverage = new Map<string, Set<string>>();

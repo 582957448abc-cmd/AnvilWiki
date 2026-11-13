@@ -3,13 +3,12 @@ export const guide = {
   title: 'Drink the Ocean Steam — Release Date, How to Play & Is It Free',
   description:
     'Is Drink the Ocean on Steam? Check the release status, watch gameplay, and learn how to drain the ocean, find treasure, and upgrade your straw.',
-  official: 'https://mana.gs/drink-the-ocean',
   media: '/media/drink-the-ocean/',
   status: [
-    ['Platform', 'Desktop browser via Mana'],
+    ['Platform', 'Desktop browser'],
     ['Steam release', 'No date or store page confirmed'],
-    ['Price', 'Mana lists its platform as free to use'],
-    ['Where to play', 'Check the latest status on Mana'],
+    ['Price', 'Steam price unannounced'],
+    ['Where to play', 'Player preview'],
   ],
   steps: [
     [
@@ -28,16 +27,10 @@ export const guide = {
   faq: [
     [
       'When does Drink the Ocean release on Steam?',
-      'No Steam release date or store listing has been confirmed. Check Mana for current browser availability.',
+      'No Steam release date or store listing has been confirmed.',
     ],
-    [
-      'Is Drink the Ocean free on Steam?',
-      'Steam pricing has not been announced. Mana describes its browser platform as free to use.',
-    ],
-    [
-      'Do I need an account?',
-      'Mana says it supports guest play and that creating an account is optional.',
-    ],
+    ['Is Drink the Ocean free on Steam?', 'Steam pricing has not been announced.'],
+    ['Do I need an account?', 'The browser platform has described accounts as optional.'],
     [
       'Can I play on my phone?',
       'The game is designed for a desktop browser with a keyboard and mouse.',
