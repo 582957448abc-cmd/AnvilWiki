@@ -31,32 +31,24 @@ import { guide } from '~/content/specials/drink-the-ocean';
           <span class="percentage" data-percentage aria-hidden="true">0%</span>
         </div>
         <progress class="track" max="100" value="0" aria-labelledby="preview-label"></progress>
-        <p class="remaining" data-remaining aria-hidden="true">3:00 remaining</p>
-        <p class="description">
-          This preview shows the player layout. The game will appear here when an embeddable build
-          is available.
-        </p>
+        <p class="description">The loading screen preview may take a moment on your first visit.</p>
       </div>
     </main>
     <script is:inline>
       const progress = document.querySelector('.track');
       const percentage = document.querySelector('[data-percentage]');
-      const remaining = document.querySelector('[data-remaining]');
       const label = document.getElementById('preview-label');
       const duration = 180_000;
       const startedAt = performance.now();
       const timer = setInterval(() => {
         const elapsed = Math.min(duration, performance.now() - startedAt);
         const percent = (elapsed / duration) * 100;
-        const seconds = Math.ceil((duration - elapsed) / 1000);
         progress.value = percent;
         percentage.textContent = `${Math.floor(percent)}%`;
-        remaining.textContent = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')} remaining`;
 
         if (elapsed === duration) {
           clearInterval(timer);
           label.textContent = 'Preview complete';
-          remaining.hidden = true;
         }
       }, 200);
 
@@ -185,19 +177,12 @@ import { guide } from '~/content/specials/drink-the-ocean';
     gap: 0.75rem;
     text-align: left;
   }
-  .percentage,
-  .remaining {
+  .percentage {
     font-variant-numeric: tabular-nums;
   }
   .percentage {
     color: #ffab77;
     font-weight: 750;
-  }
-  .remaining {
-    margin: 0.5rem 0 0;
-    color: #c2d9dd;
-    font-size: 0.8rem;
-    text-align: right;
   }
   .track {
     appearance: none;
