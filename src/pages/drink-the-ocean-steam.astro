@@ -25,17 +25,22 @@ import { guide } from '~/content/specials/drink-the-ocean';
     <div class="overview">
       <section id="preview" aria-labelledby="preview-title">
         <h2 id="preview-title">Gameplay preview</h2>
-        <video
-          controls
-          playsinline
-          preload="none"
-          poster={guide.media + 'poster.webp'}
-          aria-label="Drink the Ocean gameplay preview"
-        >
-          <source src={guide.media + 'gameplay.mp4'} type="video/mp4" />
-          <a href={guide.media + 'gameplay.mp4'}>Open the gameplay video</a>
-        </video>
-        <p class="note">Recorded footage. Interactive play is unavailable on this guide.</p>
+        <details class="player" data-preview-player>
+          <summary class="official">Play Now <small>Gameplay preview</small></summary>
+          <div class="screen">
+            <p role="status" data-loading hidden>Loading…</p>
+            <video
+              controls
+              playsinline
+              preload="none"
+              poster={guide.media + 'poster.webp'}
+              aria-label="Drink the Ocean gameplay preview"
+            >
+              <source src={guide.media + 'gameplay.mp4'} type="video/mp4" />
+              <a href={guide.media + 'gameplay.mp4'}>Open the gameplay video</a>
+            </video>
+          </div>
+        </details>
       </section>
       <section class="status" aria-labelledby="status-title">
         <h2 id="status-title">Platform & release status</h2>
@@ -95,7 +100,67 @@ import { guide } from '~/content/specials/drink-the-ocean';
   </main>
 </BaseLayout>
 
+<script is:inline>
+  for (const player of document.querySelectorAll('[data-preview-player]')) {
+    const video = player.querySelector('video');
+    const status = player.querySelector('[data-loading]');
+    let started = false;
+    const showLoading = () => {
+      status.textContent = 'Loading…';
+      status.hidden = false;
+    };
+    const hideLoading = () => {
+      status.hidden = true;
+    };
+
+    video.addEventListener('waiting', showLoading);
+    for (const event of ['playing', 'canplay', 'pause', 'ended']) {
+      video.addEventListener(event, hideLoading);
+    }
+    player.addEventListener('toggle', () => {
+      if (!player.open) {
+        video.pause();
+        return;
+      }
+      if (started) return;
+      started = true;
+      video.muted = true;
+      showLoading();
+      video.play().catch(() => {
+        if (video.error) {
+          status.textContent = 'The preview could not load.';
+          status.hidden = false;
+        } else {
+          hideLoading();
+        }
+      });
+    });
+  }
+</script>
+
 <style>
+  .player {
+    border: 0;
+    padding: 0;
+  }
+  .player small {
+    display: block;
+    font-weight: 500;
+  }
+  .screen {
+    position: relative;
+    margin-top: 0.75rem;
+  }
+  .screen [role='status']:not([hidden]) {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: hsl(var(--card) / 0.92);
+    font-weight: 700;
+    pointer-events: none;
+  }
   .ocean {
     max-width: 75rem;
     margin: auto;
