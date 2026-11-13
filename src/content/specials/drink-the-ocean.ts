@@ -26,14 +26,24 @@ export const guide = {
   ],
   faq: [
     [
-      'When does Drink the Ocean release on Steam?',
-      'No Steam release date or store listing has been confirmed.',
+      'Is Drink the Ocean on Steam?',
+      'There is no confirmed Steam store page or release date. A desktop browser edition has been listed, and Steam plans are still unconfirmed.',
     ],
-    ['Is Drink the Ocean free on Steam?', 'Steam pricing has not been announced.'],
-    ['Do I need an account?', 'The browser platform has described accounts as optional.'],
     [
-      'Can I play on my phone?',
-      'The game is designed for a desktop browser with a keyboard and mouse.',
+      'Is Drink the Ocean free to play?',
+      'The browser platform offers free guest play. A Steam price has not been announced.',
+    ],
+    [
+      'What do you do in the Drink the Ocean game?',
+      'Start on a small island and drink from the shore with a plastic straw. As the water drops, search the exposed seabed for treasure. Sell what you find to buy a stronger straw and work your way down to the shipwreck.',
+    ],
+    [
+      'Do I need an account to play Drink the Ocean?',
+      'The browser platform supports guest play, so creating an account is optional.',
+    ],
+    [
+      'Can I play Drink the Ocean on my phone?',
+      'The game is designed for a desktop browser with a keyboard and mouse. Mobile support has not been announced.',
     ],
   ],
 };
