@@ -8,7 +8,7 @@ export const guide = {
     ['Platform', 'Desktop browser'],
     ['Steam release', 'No date or store page confirmed'],
     ['Price', 'Steam price unannounced'],
-    ['Where to play', 'Player preview'],
+    ['Where to play', 'Play Now in your browser'],
   ],
   steps: [
     [
@@ -43,7 +43,7 @@ export const guide = {
     ],
     [
       'Can I play Drink the Ocean on my phone?',
-      'The game is designed for a desktop browser with a keyboard and mouse. Mobile support has not been announced.',
+      'The game is designed for a desktop browser with a keyboard and mouse. For the embedded edition, use the on-screen controls if they appear.',
     ],
   ],
 };

@@ -1,5 +1,15 @@
 ---
-import { guide } from '~/content/specials/drink-the-ocean';
+const gameUrl = 'https://playgama.com/export/game/drink-the-ocean';
+const controls = [
+  ['W A S D', 'Move'],
+  ['Mouse', 'Look around'],
+  ['Left click', 'Hold to drink'],
+  ['Space', 'Jump'],
+  ['1 / 2 / 3', 'Switch unlocked tools'],
+  ['T', 'Return home'],
+  ['P', 'Settings'],
+  ['Tab', 'Release the cursor'],
+];
 ---
 
 <!doctype html>
@@ -8,60 +18,84 @@ import { guide } from '~/content/specials/drink-the-ocean';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>Play Drink The Ocean</title>
+    <title>Play Drink the Ocean in Your Browser</title>
   </head>
   <body>
     <header>
-      <a href="../" aria-label="Back to the guide">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"></path></svg>
-        Drink The Ocean
-      </a>
-      <button type="button" data-fullscreen aria-label="Toggle fullscreen">
-        <svg viewBox="0 0 24 24" aria-hidden="true"
-          ><path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"></path></svg
-        >
-      </button>
+      <a href="../">← Back to the guide</a>
     </header>
     <main>
-      <img src={guide.media + 'cover.webp'} alt="" fetchpriority="high" />
-      <div class="panel">
-        <h1>Drink The Ocean</h1>
-        <div class="progress-header">
-          <p class="label" id="preview-label" role="status">Loading screen preview</p>
-          <span class="percentage" data-percentage aria-hidden="true">0%</span>
+      <div class="intro">
+        <div>
+          <h1>Play Drink the Ocean</h1>
+          <p>Free browser game hosted by Playgama. The first load may take a moment.</p>
         </div>
-        <progress class="track" max="100" value="0" aria-labelledby="preview-label"></progress>
-        <p class="description">The loading screen preview may take a moment on your first visit.</p>
+        <button type="button" data-fullscreen hidden>Fullscreen</button>
       </div>
+      <div class="player" id="player">
+        <iframe
+          src={gameUrl}
+          title="Drink the Ocean browser game"
+          allow="autoplay; fullscreen; gamepad"
+          allowfullscreen></iframe>
+      </div>
+      <p class="hint">
+        Click inside the game to focus it. Press Tab to release the mouse and return to the page.
+      </p>
+      <section aria-labelledby="controls-title">
+        <h2 id="controls-title">Keyboard and mouse controls</h2>
+        <dl>
+          {
+            controls.map(([key, action]) => (
+              <div>
+                <>
+                  <dt>
+                    <kbd>{key}</kbd>
+                  </dt>
+                  <dd>{action}</dd>
+                </>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+      <section aria-labelledby="guide-title">
+        <h2 id="guide-title">How to play Drink the Ocean</h2>
+        <ol>
+          <li>
+            <strong>Fill up at the shore.</strong> Walk to the water with WASD and hold left click until
+            your belly is full.
+          </li>
+          <li>
+            <strong>Turn water into salt.</strong> Return to the PRESS and empty your belly there. Salt
+            is the currency for upgrades.
+          </li>
+          <li>
+            <strong>Upgrade at the blue SHOP pad.</strong> Start with more belly capacity or a better
+            straw so each trip moves more water.
+          </li>
+          <li>
+            <strong>Repeat as the shoreline recedes.</strong> Use the number keys to switch tools as you
+            unlock them. Press T if you need to get back home.
+          </li>
+        </ol>
+        <p>
+          On a touch device, use the on-screen movement and Drink controls if the game displays
+          them.
+        </p>
+      </section>
     </main>
     <script is:inline>
-      const progress = document.querySelector('.track');
-      const percentage = document.querySelector('[data-percentage]');
-      const label = document.getElementById('preview-label');
-      const duration = 180_000;
-      const startedAt = performance.now();
-      const timer = setInterval(() => {
-        const elapsed = Math.min(duration, performance.now() - startedAt);
-        const percent = (elapsed / duration) * 100;
-        progress.value = percent;
-        percentage.textContent = `${Math.floor(percent)}%`;
-
-        if (elapsed === duration) {
-          clearInterval(timer);
-          label.textContent = 'Preview complete';
-        }
-      }, 200);
-
-      const fullscreenButton = document.querySelector('[data-fullscreen]');
-      if (!document.fullscreenEnabled) {
-        fullscreenButton.hidden = true;
-      } else {
-        fullscreenButton.addEventListener('click', async () => {
+      const button = document.querySelector('[data-fullscreen]');
+      const player = document.getElementById('player');
+      if (document.fullscreenEnabled) {
+        button.hidden = false;
+        button.addEventListener('click', async () => {
           try {
             if (document.fullscreenElement) await document.exitFullscreen();
-            else await document.documentElement.requestFullscreen();
+            else await player.requestFullscreen();
           } catch {
-            // Keep the player available in the current viewport.
+            player.querySelector('iframe').focus();
           }
         });
       }
@@ -75,136 +109,112 @@ import { guide } from '~/content/specials/drink-the-ocean';
   }
   body {
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100dvh;
     background: #062736;
     color: #f7f3e9;
     font:
-      16px/1.5 system-ui,
+      16px/1.55 system-ui,
       sans-serif;
   }
+  header,
+  main {
+    width: min(1100px, calc(100% - 32px));
+    margin-inline: auto;
+  }
   header {
-    min-height: 58px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-inline: clamp(14px, 4vw, 48px);
+    padding-block: 1rem;
   }
-  header a,
-  button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #e0eeec;
-    text-decoration: none;
-    font: inherit;
-    font-weight: 650;
-  }
-  button {
-    background: transparent;
-    border: 1px solid #51717c;
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 9px;
-  }
-  button[hidden] {
-    display: none;
-  }
-  svg {
-    width: 18px;
-    height: 18px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.7;
-    stroke-linejoin: round;
-    stroke-linecap: round;
+  header a {
+    color: inherit;
+    text-underline-offset: 0.25em;
   }
   main {
-    position: relative;
-    isolation: isolate;
-    flex: 1;
-    display: grid;
-    place-items: center;
-    padding: 24px;
-    overflow: hidden;
+    padding-bottom: 3rem;
   }
-  main img,
-  main::after {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
+  .intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
   }
-  main img {
-    object-fit: cover;
-    object-position: 68% center;
-  }
-  main::after {
-    content: '';
-    z-index: -1;
-    background: #031e3090;
-  }
-  .panel {
-    width: min(100%, 29rem);
-    text-align: center;
-    padding: clamp(26px, 5vw, 50px);
-    border: 1px solid #c8e6e753;
-    border-radius: 22px;
-    background: #092b39f0;
-    box-shadow: 0 16px 65px #00121f60;
+  h1,
+  h2 {
+    margin: 0 0 0.35rem;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
   }
   h1 {
-    font-size: clamp(2rem, 5vw, 3.4rem);
-    line-height: 1.02;
-    letter-spacing: -0.06em;
-    margin: 0 0 1.1rem;
+    font-size: clamp(2rem, 6vw, 3.6rem);
   }
-  .label {
-    font-weight: 700;
-    margin: 0 0 0.7rem;
-  }
-  .description {
+  p {
+    margin: 0.55rem 0 0;
     color: #c2d9dd;
-    margin: 1rem 0 0;
-    font-size: 0.9rem;
   }
-  .progress-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 0.75rem;
-    text-align: left;
-  }
-  .percentage {
-    font-variant-numeric: tabular-nums;
-  }
-  .percentage {
-    color: #ffab77;
-    font-weight: 750;
-  }
-  .track {
-    appearance: none;
-    display: block;
-    width: 100%;
-    height: 7px;
+  button {
+    background: #ffab77;
+    color: #252322;
     border: 0;
-    border-radius: 10px;
-    background: #416374;
-    accent-color: #ffab77;
+    border-radius: 100px;
+    padding: 0.7rem 1.1rem;
+    font: inherit;
+    font-weight: 750;
+    cursor: pointer;
+  }
+  .player {
+    display: flex;
+    height: clamp(440px, 72vh, 760px);
+    background: #031822;
+    border: 1px solid #416374;
+    border-radius: 18px;
     overflow: hidden;
   }
-  .track::-webkit-progress-bar {
-    background: #416374;
-    border-radius: 10px;
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
   }
-  .track::-webkit-progress-value {
-    background: #ffab77;
-    border-radius: 10px;
+  .player:fullscreen {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
   }
-  .track::-moz-progress-bar {
-    background: #ffab77;
-    border-radius: 10px;
+  .hint {
+    font-size: 0.9rem;
+  }
+  section {
+    margin-top: 2rem;
+  }
+  dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(147px, 1fr));
+    gap: 0.55rem;
+  }
+  dl div {
+    padding: 0.7rem;
+    border: 1px solid #416374;
+    border-radius: 0.6rem;
+    background: #0e3543;
+  }
+  dd {
+    margin: 0.25rem 0 0;
+    color: #c2d9dd;
+  }
+  kbd {
+    color: #ffbe95;
+    font-size: 0.95rem;
+  }
+  ol {
+    padding-left: 1.35rem;
+    max-width: 70ch;
+  }
+  li {
+    margin: 0.75rem 0;
+  }
+  @media (max-width: 600px) {
+    .player {
+      height: clamp(390px, 70svh, 650px);
+    }
   }
 </style>
