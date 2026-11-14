@@ -2,7 +2,7 @@ export const guide = {
   heading: 'Drink the Ocean Steam',
   title: 'Drink the Ocean Steam — Release Date, How to Play & Is It Free',
   description:
-    'Is Drink the Ocean on Steam? Check the release status, watch gameplay, and learn how to drain the ocean, find treasure, and upgrade your straw.',
+    'Play Drink the Ocean free in your browser. Check the Steam release status and learn how to earn salt and upgrade your straw.',
   media: '/media/drink-the-ocean/',
   status: [
     ['Platform', 'Desktop browser'],
