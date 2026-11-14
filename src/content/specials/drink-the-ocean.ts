@@ -23,28 +23,28 @@ export const guide = {
   ],
   faq: [
     [
-      'Can I play Drink the Ocean in my browser?',
-      'Yes. Open Play Now on this site, then select Let’s Play in the player. The browser game is hosted by Playgama.',
+      'How do I start playing Drink the Ocean?',
+      'Select Play Now on this page, then choose Let’s Play in the game window. On a computer, click inside the game to give it keyboard and mouse focus. Press Tab to release the cursor.',
     ],
     [
-      'Is Drink the Ocean on Steam?',
-      'We have not confirmed a Steam listing, release date, or price. You can play the browser edition here.',
+      'How do I turn water into salt?',
+      'Hold left click at the shore until your belly is full. Walk under the machine marked PRESS to turn the water you collected into salt. You can spend that salt at the blue SHOP pad.',
     ],
     [
-      'Is the browser version free?',
-      'Yes. The embedded browser edition is free to start and may show ads.',
-    ],
-    [
-      'How do I earn salt and upgrade my straw?',
-      'Drink until your belly is full, then head back to the PRESS to make salt. Spend it on upgrades at the blue SHOP pad.',
+      'Should I buy a bigger belly or a better straw first?',
+      'Buy a bigger belly if you fill up quickly and spend most of each trip walking back to the PRESS. Pick a better straw if you spend most of your time drinking at the shore.',
     ],
     [
       'Can I play on my phone?',
-      'The embedded edition offers touch controls. Hold the on-screen DRINK button at the shore. Keyboard and mouse are available on a computer.',
+      'Yes. Use the on-screen movement controls to reach the shore, then hold DRINK. On a computer, use WASD to move and hold left click to drink.',
     ],
     [
-      'Can I invite a friend?',
-      'Use Share game to send a link to this site’s game page. Your friend can open it and start their own game.',
+      'Can I share the game with a friend?',
+      'Choose Share game below the player to send this site’s game link. Your friend can open it and start their own run.',
+    ],
+    [
+      'Is Drink the Ocean on Steam, and is it free?',
+      'The browser version is free to start and may show ads. There is no confirmed Steam store page, release date, or pricing.',
     ],
   ],
 };

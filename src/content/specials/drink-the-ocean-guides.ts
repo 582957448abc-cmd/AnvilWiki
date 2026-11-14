@@ -1,6 +1,7 @@
 export const articles = {
   'beginner-guide': {
     title: 'Drink the Ocean Beginner Guide',
+    linkLabel: 'First run: fill up, make salt, and buy an upgrade',
     description:
       'Learn the first trip from the shoreline to the PRESS, how to earn salt, and what to buy at the blue SHOP pad.',
     sections: [
@@ -24,6 +25,7 @@ export const articles = {
   },
   upgrades: {
     title: 'Drink the Ocean Upgrades and Tools',
+    linkLabel: 'Upgrade guide: bigger belly, better straws, and tools',
     description:
       'Compare belly capacity, extra straws, the mouth vacuum, and the pocket whirlpool in the browser game.',
     sections: [

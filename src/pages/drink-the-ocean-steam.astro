@@ -114,19 +114,19 @@ import { guide } from '~/content/specials/drink-the-ocean';
           </video>
         </section>
         <section class="section" aria-labelledby="more-guides">
-          <h2 id="more-guides">More Drink the Ocean guides</h2>
+          <h2 id="more-guides">Drink the Ocean walkthroughs</h2>
           <ul>
             {
               Object.entries(articles).map(([slug, article]) => (
                 <li>
-                  <a href={'./' + slug + '/'}>{article.title}</a>
+                  <a href={'./' + slug + '/'}>{article.linkLabel}</a>
                 </li>
               ))
             }
           </ul>
         </section>
         <section id="faq" class="section">
-          <h2>Frequently asked questions</h2>
+          <h2>Drink the Ocean FAQ</h2>
           {
             guide.faq.map(([question, answer]) => (
               <details>
