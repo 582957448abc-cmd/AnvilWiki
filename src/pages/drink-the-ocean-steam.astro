@@ -139,6 +139,21 @@ import { guide } from '~/content/specials/drink-the-ocean';
           }
         </section>
       </div>
+      <aside
+        class="guide-ad editorial"
+        aria-label="Advertisement"
+        data-nosnippet
+        data-pagefind-ignore
+      >
+        <p>Advertisement</p>
+        <iframe
+          src="/ads/ocean-native.html"
+          title="Advertisement"
+          loading="lazy"
+          sandbox="allow-scripts"
+          width="760"
+          height="300"></iframe>
+      </aside>
       <footer>Independent game guide.</footer>
     </main>
     <script is:inline>
@@ -377,6 +392,20 @@ import { guide } from '~/content/specials/drink-the-ocean';
     padding-top: 1rem;
     border-top: 1px solid #d2ddd4;
     font-size: 0.85rem;
+  }
+  .guide-ad {
+    margin-top: 2rem;
+  }
+  .guide-ad p {
+    margin: 0 0 0.4rem;
+    color: #41615e;
+    font-size: 0.8rem;
+  }
+  .guide-ad iframe {
+    display: block;
+    width: 100%;
+    height: 300px;
+    border: 0;
   }
   @media (max-width: 680px) {
     .bar-inner,
