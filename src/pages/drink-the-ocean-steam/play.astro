@@ -1,5 +1,23 @@
 ---
 import { articles } from '~/content/specials/drink-the-ocean-guides';
+import { siteUrl } from '~/config/site';
+
+const shareTitle = 'Play Drink the Ocean';
+const shareUrl = new URL('/drink-the-ocean-steam/play/', siteUrl).href;
+const encodedUrl = encodeURIComponent(shareUrl);
+const encodedTitle = encodeURIComponent(shareTitle);
+const socialLinks = [
+  ['Facebook', 'https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl],
+  ['X', 'https://twitter.com/intent/tweet?url=' + encodedUrl + '&text=' + encodedTitle],
+  [
+    'WhatsApp',
+    'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareTitle + ' ' + shareUrl),
+  ],
+  ['Telegram', 'https://t.me/share/url?url=' + encodedUrl + '&text=' + encodedTitle],
+  ['Reddit', 'https://www.reddit.com/submit?url=' + encodedUrl + '&title=' + encodedTitle],
+  ['LinkedIn', 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodedUrl],
+];
+
 const gameUrl = 'https://playgama.com/export/game/drink-the-ocean';
 const controls = [
   ['WASD', 'Move'],
@@ -41,10 +59,35 @@ const controls = [
           allowfullscreen></iframe>
       </div>
       <div class="share">
-        <button type="button" data-share>Share game</button>
-        <input type="url" readonly aria-label="Game page link" data-share-url hidden />
-        <span role="status" data-share-status></span>
+        <button type="button" data-share aria-haspopup="dialog">Share game</button>
       </div>
+      <dialog class="share-dialog" aria-labelledby="share-title">
+        <div class="share-heading">
+          <h2 id="share-title">Share this game</h2>
+          <form method="dialog">
+            <button class="share-close" aria-label="Close share panel" autofocus>×</button>
+          </form>
+        </div>
+        <p>Share on social media</p>
+        <ul class="social-links">
+          {
+            socialLinks.map(([name, href]) => (
+              <li>
+                <a href={href} target="_blank" rel="noopener noreferrer">
+                  {name}
+                </a>
+              </li>
+            ))
+          }
+          <li><a href={'mailto:?subject=' + encodedTitle + '&body=' + encodedUrl}>Email</a></li>
+        </ul>
+        <label for="share-url">Or copy link</label>
+        <div class="copy-row">
+          <input id="share-url" type="url" value={shareUrl} readonly />
+          <button type="button" data-copy>Copy</button>
+        </div>
+        <p role="status" data-share-status></p>
+      </dialog>
       <p class="hint">
         Click inside the game to focus it. Press Tab to release the mouse and return to the page.
       </p>
@@ -100,31 +143,23 @@ const controls = [
     </main>
     <script is:inline>
       const shareButton = document.querySelector('[data-share]');
-      const shareInput = document.querySelector('[data-share-url]');
+      const shareDialog = document.querySelector('.share-dialog');
+      const shareInput = document.getElementById('share-url');
       const shareStatus = document.querySelector('[data-share-status]');
-      const shareUrl = new URL(location.pathname, location.origin).href;
 
-      shareButton.addEventListener('click', async () => {
+      shareButton.addEventListener('click', () => {
         shareStatus.textContent = '';
-        if (navigator.share) {
-          try {
-            await navigator.share({ title: 'Play Drink the Ocean', url: shareUrl });
-            return;
-          } catch (error) {
-            if (error.name === 'AbortError') return;
-          }
-        }
+        shareDialog.showModal();
+      });
+      shareDialog.querySelector('[data-copy]').addEventListener('click', async () => {
         try {
-          await navigator.clipboard.writeText(shareUrl);
+          await navigator.clipboard.writeText(shareInput.value);
           shareStatus.textContent = 'Link copied';
         } catch {
-          shareInput.value = shareUrl;
-          shareInput.hidden = false;
           shareInput.select();
           shareStatus.textContent = 'Copy the selected link';
         }
       });
-
       const button = document.querySelector('[data-fullscreen]');
       const player = document.getElementById('player');
       if (document.fullscreenEnabled) {
@@ -278,14 +313,78 @@ const controls = [
     background: #e3eee9;
     color: #12353d;
   }
-  .share input {
-    width: min(100%, 360px);
+  .share-dialog {
+    box-sizing: border-box;
+    width: min(29rem, calc(100% - 2rem));
+    padding: clamp(1rem, 5vw, 1.65rem);
+    max-height: calc(100% - 2rem);
+    border: 1px solid #416374;
+    border-radius: 1rem;
+    background: #0e3543;
+    color: #fff7e8;
+  }
+  .share-dialog::backdrop {
+    background: #02141ac9;
+  }
+  .share-heading,
+  .copy-row {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .share-heading {
+    justify-content: space-between;
+  }
+  .share-heading h2 {
+    margin: 0;
+  }
+  .share-close {
+    font-size: 1.4rem;
+    line-height: 1;
+    background: transparent;
+    color: inherit;
+  }
+  .share-dialog label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+  }
+  .social-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.55rem 0 1.2rem;
+  }
+  .social-links li {
+    margin: 0;
+  }
+  .social-links a {
+    display: block;
+    padding: 0.55rem;
+    text-align: center;
+    color: #fff7e8;
+    background: #193f4e;
+    border: 1px solid #527482;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .social-links a:hover {
+    background: #275868;
+  }
+  .copy-row input {
+    min-width: 0;
+    flex: 1;
     padding: 0.65rem;
     border: 0;
     border-radius: 6px;
     font: inherit;
   }
-  .share span,
+  [data-share-status]:empty {
+    margin: 0;
+  }
   .hint {
     color: #dcebea;
   }
