@@ -1,5 +1,6 @@
 ---
 import { siteUrl as siteOrigin } from '~/config/site';
+import { articles } from '~/content/specials/drink-the-ocean-guides';
 import { guide } from '~/content/specials/drink-the-ocean';
 ---
 
@@ -74,9 +75,9 @@ import { guide } from '~/content/specials/drink-the-ocean';
             <strong>No Steam release has been confirmed.</strong> A desktop browser edition has been listed.
           </p>
           <p>
-            Start on a small island with a plastic straw. Each sip lowers the water and uncovers
-            more of the seabed. Sell the treasure you find, buy stronger straws, and drain enough
-            water to reach the shipwreck.
+            Start with a straw and drink at the shoreline. Use the PRESS to turn water into salt,
+            then buy upgrades at the SHOP. Drain enough water to expose the shipwreck and keep
+            exploring.
           </p>
         </section>
         <section id="how-to-play" class="section">
@@ -94,8 +95,8 @@ import { guide } from '~/content/specials/drink-the-ocean';
             }
           </ol>
           <p class="note">
-            For your first upgrade, alternate between drinking and checking exposed ground for
-            treasure. Upgrade timing depends on what you find.
+            For your first upgrade, compare how long it takes to fill up with how long it takes to
+            walk back to the PRESS.
           </p>
         </section>
         <section id="preview" class="section media-section" aria-labelledby="preview-title">
@@ -111,6 +112,18 @@ import { guide } from '~/content/specials/drink-the-ocean';
           >
             <source src={guide.media + 'gameplay.mp4'} type="video/mp4" />
           </video>
+        </section>
+        <section class="section" aria-labelledby="more-guides">
+          <h2 id="more-guides">More Drink the Ocean guides</h2>
+          <ul>
+            {
+              Object.entries(articles).map(([slug, article]) => (
+                <li>
+                  <a href={'./' + slug + '/'}>{article.title}</a>
+                </li>
+              ))
+            }
+          </ul>
         </section>
         <section id="faq" class="section">
           <h2>Frequently asked questions</h2>

@@ -1,4 +1,5 @@
 ---
+import { articles } from '~/content/specials/drink-the-ocean-guides';
 const gameUrl = 'https://playgama.com/export/game/drink-the-ocean';
 const controls = [
   ['W A S D', 'Move'],
@@ -39,6 +40,11 @@ const controls = [
           allow="autoplay; fullscreen; gamepad"
           allowfullscreen></iframe>
       </div>
+      <div class="share">
+        <button type="button" data-share>Share game</button>
+        <input type="url" readonly aria-label="Game page link" data-share-url hidden />
+        <span role="status" data-share-status></span>
+      </div>
       <p class="hint">
         Click inside the game to focus it. Press Tab to release the mouse and return to the page.
       </p>
@@ -61,7 +67,7 @@ const controls = [
       </section>
       <section aria-labelledby="guide-title">
         <h2 id="guide-title">How to play Drink the Ocean</h2>
-        <ol>
+        <ol class="steps">
           <li>
             <strong>Fill up at the shore.</strong> Walk to the water with WASD and hold left click until
             your belly is full.
@@ -84,8 +90,41 @@ const controls = [
           them.
         </p>
       </section>
+      <nav class="guides" aria-label="More guides">
+        {
+          Object.entries(articles).map(([slug, article]) => (
+            <a href={'../' + slug + '/'}>{article.title} →</a>
+          ))
+        }
+      </nav>
     </main>
     <script is:inline>
+      const shareButton = document.querySelector('[data-share]');
+      const shareInput = document.querySelector('[data-share-url]');
+      const shareStatus = document.querySelector('[data-share-status]');
+      const shareUrl = new URL(location.pathname, location.origin).href;
+
+      shareButton.addEventListener('click', async () => {
+        shareStatus.textContent = '';
+        if (navigator.share) {
+          try {
+            await navigator.share({ title: 'Play Drink the Ocean', url: shareUrl });
+            return;
+          } catch (error) {
+            if (error.name === 'AbortError') return;
+          }
+        }
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          shareStatus.textContent = 'Link copied';
+        } catch {
+          shareInput.value = shareUrl;
+          shareInput.hidden = false;
+          shareInput.select();
+          shareStatus.textContent = 'Copy the selected link';
+        }
+      });
+
       const button = document.querySelector('[data-fullscreen]');
       const player = document.getElementById('player');
       if (document.fullscreenEnabled) {
@@ -216,5 +255,67 @@ const controls = [
     .player {
       height: clamp(390px, 70svh, 650px);
     }
+  }
+  .share {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .share button {
+    background: #e3eee9;
+    color: #12353d;
+  }
+  .share input {
+    width: min(100%, 360px);
+    padding: 0.65rem;
+    border: 0;
+    border-radius: 6px;
+    font: inherit;
+  }
+  .share span,
+  .hint {
+    color: #dcebea;
+  }
+  section {
+    max-width: 850px;
+    padding: clamp(16px, 4vw, 32px);
+    border: 1px solid #416374;
+    background: #0a303e;
+    border-radius: 16px;
+    font-size: 1.08rem;
+  }
+  section h2 {
+    font-size: clamp(1.45rem, 4vw, 2rem);
+    margin-bottom: 1rem;
+  }
+  .steps {
+    padding-left: 1.5rem;
+    line-height: 1.7;
+  }
+  .steps li {
+    padding-left: 0.3rem;
+    margin-block: 1rem;
+  }
+  .steps li::marker {
+    color: #ffbe95;
+    font-weight: 800;
+  }
+  .steps strong {
+    display: block;
+    color: #fff7e8;
+    font-size: 1.13rem;
+  }
+  .guides {
+    display: flex;
+    gap: 0.65rem 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .guides a {
+    color: #ffbe95;
+    font-weight: 750;
+    text-underline-offset: 0.22em;
   }
 </style>

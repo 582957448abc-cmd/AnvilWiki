@@ -1,3 +1,4 @@
+import { articles as oceanGuides } from './src/content/specials/drink-the-ocean-guides';
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
@@ -97,7 +98,8 @@ function buildLastmodMap(
       const rel = path.relative(base, p).replace(/\.mdx$/, '');
       const [loc, cat, ...rest] = rel.split(path.sep);
       const slugPath = rest.join('/');
-      const articlePath = loc === defaultLocale ? `/${cat}/${slugPath}` : `/${loc}/${cat}/${slugPath}`;
+      const articlePath =
+        loc === defaultLocale ? `/${cat}/${slugPath}` : `/${loc}/${cat}/${slugPath}`;
       // Same true-spelling rule as the draft check above (inline comments
       // included): a `noindex: True` page must not ship in the sitemap it
       // asked out of.
@@ -175,7 +177,10 @@ function buildLastmodMap(
         if (!entry.endsWith('.md')) continue;
         const src = fs.readFileSync(path.join(dir, entry), 'utf8');
         const fm = extractFrontmatter(src);
-        const iso = fm.match(/^updated:\s*(.+)$/m)?.[1]?.trim().replace(/['"]/g, '');
+        const iso = fm
+          .match(/^updated:\s*(.+)$/m)?.[1]
+          ?.trim()
+          .replace(/['"]/g, '');
         if (!iso) continue;
         const date = new Date(iso);
         if (Number.isNaN(date.getTime())) continue;
@@ -317,7 +322,13 @@ export default defineConfig({
       // on English-fallback URLs (/ja/… serving English declares only `en`).
       // Alternates are built per-URL in `serialize` from real MDX coverage.
       // Publish only the game guide in this site's search sitemap.
-      filter: (url) => normalizePath(decodeSitemapPath(url)) === '/drink-the-ocean-steam',
+      filter: (url) => {
+        const path = normalizePath(decodeSitemapPath(url));
+        return (
+          path === '/drink-the-ocean-steam' ||
+          Object.keys(oceanGuides).some((slug) => path === '/drink-the-ocean-steam/' + slug)
+        );
+      },
       // Inject <lastmod> from article frontmatter (see buildLastmodMap) and
       // hreflang alternates that mirror the page-level truth (see alternatesFor).
       serialize(item) {

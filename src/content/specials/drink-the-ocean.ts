@@ -13,37 +13,38 @@ export const guide = {
   steps: [
     [
       'Start with a straw',
-      'Drink from the shore to lower the water level and expose more of the seabed.',
+      'Walk to the shore with WASD and hold left click until your belly is full.',
     ],
-    [
-      'Look for treasure',
-      'Search newly exposed ground, then sell what you find to fund your next upgrade.',
-    ],
+    ['Earn salt at the PRESS', 'Return to the PRESS to convert the water you drank into salt.'],
     [
       'Upgrade your straw',
-      'A more powerful straw lowers the ocean faster. Use it to reach deeper areas, including the shipwreck.',
+      'Spend salt at the blue SHOP pad on a bigger belly or better straws. Keep draining to uncover deeper areas.',
     ],
   ],
   faq: [
     [
+      'Can I play Drink the Ocean in my browser?',
+      'Yes. Open Play Now on this site, then select Let’s Play in the player. The browser game is hosted by Playgama.',
+    ],
+    [
       'Is Drink the Ocean on Steam?',
-      'There is no confirmed Steam store page or release date. A desktop browser edition has been listed, and Steam plans are still unconfirmed.',
+      'We have not confirmed a Steam listing, release date, or price. You can play the browser edition here.',
     ],
     [
-      'Is Drink the Ocean free to play?',
-      'The browser platform offers free guest play. A Steam price has not been announced.',
+      'Is the browser version free?',
+      'Yes. The embedded browser edition is free to start and may show ads.',
     ],
     [
-      'What do you do in the Drink the Ocean game?',
-      'Start on a small island and drink from the shore with a plastic straw. As the water drops, search the exposed seabed for treasure. Sell what you find to buy a stronger straw and work your way down to the shipwreck.',
+      'How do I earn salt and upgrade my straw?',
+      'Drink until your belly is full, then head back to the PRESS to make salt. Spend it on upgrades at the blue SHOP pad.',
     ],
     [
-      'Do I need an account to play Drink the Ocean?',
-      'The browser platform supports guest play, so creating an account is optional.',
+      'Can I play on my phone?',
+      'The embedded edition offers touch controls. Hold the on-screen DRINK button at the shore. Keyboard and mouse are available on a computer.',
     ],
     [
-      'Can I play Drink the Ocean on my phone?',
-      'The game is designed for a desktop browser with a keyboard and mouse. For the embedded edition, use the on-screen controls if they appear.',
+      'Can I invite a friend?',
+      'Use Share game to send a link to this site’s game page. Your friend can open it and start their own game.',
     ],
   ],
 };
