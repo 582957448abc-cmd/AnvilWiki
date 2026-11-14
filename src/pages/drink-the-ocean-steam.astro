@@ -1,4 +1,5 @@
 ---
+import OceanSiteFooter from '~/components/layout/OceanSiteFooter.astro';
 import { siteUrl as siteOrigin } from '~/config/site';
 import { articles } from '~/content/specials/drink-the-ocean-guides';
 import { guide } from '~/content/specials/drink-the-ocean';
@@ -154,7 +155,7 @@ import { guide } from '~/content/specials/drink-the-ocean';
           width="760"
           height="300"></iframe>
       </aside>
-      <footer>Independent game guide.</footer>
+      <OceanSiteFooter />
     </main>
     <script is:inline>
       const footage = document.querySelector('[data-gameplay-video]');
@@ -352,8 +353,7 @@ import { guide } from '~/content/specials/drink-the-ocean';
   ol {
     padding-left: 1.3rem;
   }
-  .note,
-  footer {
+  .note {
     color: #41615e;
   }
   .media-section {
@@ -386,12 +386,6 @@ import { guide } from '~/content/specials/drink-the-ocean';
   }
   details p {
     margin: 0 0 0.75rem;
-  }
-  footer {
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid #d2ddd4;
-    font-size: 0.85rem;
   }
   .guide-ad {
     margin-top: 2rem;

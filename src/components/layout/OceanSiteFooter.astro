@@ -1,0 +1,26 @@
+---
+import { siteInformation } from '~/content/specials/site-information';
+---
+
+<footer class="site-info-footer">
+  <nav aria-label="Site information">
+    {Object.entries(siteInformation).map(([href, item]) => <a href={href}>{item.title}</a>)}
+  </nav>
+</footer>
+<style>
+  .site-info-footer {
+    margin-top: 2.5rem;
+    padding-block: 1rem;
+    border-top: 1px solid currentColor;
+    font-size: 0.9rem;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
+  }
+  a {
+    color: inherit;
+    text-underline-offset: 0.2em;
+  }
+</style>

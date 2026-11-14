@@ -1,4 +1,5 @@
 ---
+import OceanSiteFooter from '~/components/layout/OceanSiteFooter.astro';
 import { articles } from '~/content/specials/drink-the-ocean-guides';
 import { siteUrl } from '~/config/site';
 
@@ -44,6 +45,7 @@ const related = Object.entries(articles).filter(([slug]) => slug !== Astro.param
       <aside aria-label="More guides">
         {related.map(([slug, article]) => <a href={`../${slug}/`}>{article.title} →</a>)}
       </aside>
+      <OceanSiteFooter />
     </main>
   </body>
 </html>
