@@ -2,7 +2,7 @@
 import { articles } from '~/content/specials/drink-the-ocean-guides';
 const gameUrl = 'https://playgama.com/export/game/drink-the-ocean';
 const controls = [
-  ['W A S D', 'Move'],
+  ['WASD', 'Move'],
   ['Mouse', 'Look around'],
   ['Left click', 'Hold to drink'],
   ['Space', 'Jump'],
@@ -237,12 +237,23 @@ const controls = [
     background: #0e3543;
   }
   dd {
-    margin: 0.25rem 0 0;
-    color: #c2d9dd;
+    margin: 0.5rem 0 0;
+    color: #f7f3e9;
+    font-size: 1.0625rem;
+    font-weight: 650;
+    line-height: 1.3;
   }
   kbd {
-    color: #ffbe95;
-    font-size: 0.95rem;
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.35rem;
+    background: #ffbe95;
+    color: #30251f;
+    font: inherit;
+    font-size: 1.0625rem;
+    font-weight: 800;
+    letter-spacing: 0.015em;
+    line-height: 1.3;
   }
   ol {
     padding-left: 1.35rem;
