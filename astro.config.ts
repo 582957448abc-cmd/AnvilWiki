@@ -323,7 +323,7 @@ export default defineConfig({
       // Alternates are built per-URL in `serialize` from real MDX coverage.
       // Publish only the game guide in this site's search sitemap.
       filter: (url) => {
-        const path = normalizePath(decodeSitemapPath(url));
+        const path = normalizePath(decodeSitemapPath(url)).replace(/^\/de(?=\/)/, '');
         return (
           path === '/drink-the-ocean-steam' ||
           Object.keys(oceanGuides).some((slug) => path === '/drink-the-ocean-steam/' + slug)

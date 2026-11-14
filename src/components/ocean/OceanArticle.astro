@@ -1,0 +1,107 @@
+---
+import { deArticles } from '~/content/specials/ocean-de';
+import OceanLanguageLink from '~/components/ocean/OceanLanguageLink.astro';
+import OceanAlternates from '~/components/ocean/OceanAlternates.astro';
+import OceanSiteFooter from '~/components/layout/OceanSiteFooter.astro';
+import { articles as enArticles } from '~/content/specials/drink-the-ocean-guides';
+import { siteUrl } from '~/config/site';
+
+const { content, locale } = Astro.props;
+const articles = locale === 'de' ? deArticles : enArticles;
+const related = Object.entries(articles).filter(([slug]) => slug !== Astro.params.article);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{content.title}</title>
+    <meta name="description" content={content.description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, siteUrl).href} />
+    <OceanAlternates pathname={Astro.url.pathname} />
+  </head>
+  <body>
+    <main>
+      <nav aria-label={locale === 'de' ? 'Spielnavigation' : 'Game navigation'}>
+        <a href="../">{locale === 'de' ? '← Zur Spielübersicht' : '← Game overview'}</a><a
+          href="../play/">{locale === 'de' ? 'Jetzt spielen' : 'Play Now'}</a
+        >
+        <OceanLanguageLink locale={locale} />
+      </nav>
+      <article>
+        <h1>{content.title}</h1>
+        <p class="intro">{content.description}</p>
+        {
+          content.sections.map(([heading, body]) => (
+            <section>
+              <>
+                <h2>{heading}</h2>
+                <p>{body}</p>
+              </>
+            </section>
+          ))
+        }
+      </article>
+      <aside aria-label={locale === 'de' ? 'Weitere Anleitungen' : 'More guides'}>
+        {related.map(([slug, article]) => <a href={`../${slug}/`}>{article.title} →</a>)}
+      </aside>
+      <OceanSiteFooter locale={locale} />
+    </main>
+  </body>
+</html>
+<style>
+  body {
+    margin: 0;
+    color: #132f36;
+    background: #f7f3e9;
+    font:
+      17px/1.7 system-ui,
+      sans-serif;
+  }
+  main {
+    width: min(720px, calc(100% - 36px));
+    margin: 0 auto;
+    padding-bottom: 3rem;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #cedbd3;
+  }
+  a {
+    color: #164e48;
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 7vw, 4rem);
+    line-height: 1.03;
+    letter-spacing: -0.055em;
+    margin: 2rem 0 1rem;
+  }
+  h2 {
+    font-size: 1.4rem;
+    margin: 0 0 0.35rem;
+    line-height: 1.2;
+  }
+  p {
+    margin: 0;
+  }
+  .intro {
+    font-size: 1.12rem;
+    color: #41615e;
+  }
+  section {
+    margin-top: 1.55rem;
+  }
+  aside {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #e3ede5;
+    border-radius: 12px;
+  }
+</style>

@@ -1,79 +1,12 @@
 ---
+import OceanInfo from '~/components/ocean/OceanInfo.astro';
 import { siteInformation } from '~/content/specials/site-information';
-import { siteUrl } from '~/config/site';
-import OceanSiteFooter from '~/components/layout/OceanSiteFooter.astro';
-
 export function getStaticPaths() {
-  return Object.entries(siteInformation).map(([path, page]) => ({
-    params: { information: path.slice(1, -1) },
+  return Object.entries(siteInformation).map(([slug, page]) => ({
+    params: { information: slug.slice(1, -1) },
     props: { page },
   }));
 }
-
-const { page } = Astro.props;
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{page.title} | Drink the Ocean Steam</title>
-    <meta name="description" content={page.description} />
-    <link rel="canonical" href={new URL(Astro.url.pathname, siteUrl).href} />
-  </head>
-  <body>
-    <main>
-      <a href="/drink-the-ocean-steam/">← Back to the game guide</a>
-      <h1>{page.title}</h1>
-      <p class="date">Last updated <time datetime="2026-11-14">November 14, 2026</time></p>
-      {
-        page.sections.map(([title, body, label, href]) => (
-          <section>
-            <h2>{title}</h2>
-            <p>{body}</p>
-            {href && <a href={href}>{label}</a>}
-          </section>
-        ))
-      }
-      <OceanSiteFooter />
-    </main>
-  </body>
-</html>
-<style>
-  body {
-    margin: 0;
-    background: #f7f3e9;
-    color: #132f36;
-    font:
-      17px/1.65 system-ui,
-      sans-serif;
-  }
-  main {
-    width: min(72ch, calc(100% - 36px));
-    margin: 2rem auto 3rem;
-  }
-  a {
-    color: #164e48;
-    text-underline-offset: 0.2em;
-  }
-  h1 {
-    font-size: clamp(2rem, 7vw, 3.5rem);
-    letter-spacing: -0.05em;
-    line-height: 1.1;
-    margin: 1.7rem 0 0.4rem;
-  }
-  h2 {
-    font-size: 1.22rem;
-    margin: 0 0 0.3rem;
-  }
-  section {
-    margin-top: 1.5rem;
-  }
-  p {
-    margin: 0 0 0.35rem;
-  }
-  .date {
-    color: #41615e;
-  }
-</style>
+<OceanInfo locale="en" page={Astro.props.page} />
