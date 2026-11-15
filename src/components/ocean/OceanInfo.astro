@@ -19,14 +19,29 @@ const { page, locale } = Astro.props;
   </head>
   <body>
     <main>
-      <a href={(locale === 'de' ? '/de' : '') + '/drink-the-ocean-steam/'}
-        >{locale === 'de' ? '← Zurück zur Spielübersicht' : '← Back to the game guide'}</a
+      <a
+        href={(locale === 'pt-BR' ? '/pt-br' : locale === 'de' ? '/de' : '') +
+          '/drink-the-ocean-steam/'}
+        >{
+          locale === 'pt-BR'
+            ? '← Voltar ao guia'
+            : locale === 'de'
+              ? '← Zurück zur Spielübersicht'
+              : '← Back to the game guide'
+        }</a
       >
       <OceanLanguageLink locale={locale} /><h1>{page.title}</h1>
       <p class="date">
-        {locale === 'de' ? 'Stand' : 'Last updated'}
+        {locale === 'pt-BR' ? 'Última atualização' : locale === 'de' ? 'Stand' : 'Last updated'}
         <time datetime="2026-11-14"
-          >{locale === 'de' ? '14. November 2026' : 'November 14, 2026'}</time>
+          >{
+            locale === 'pt-BR'
+              ? '15 de novembro de 2026'
+              : locale === 'de'
+                ? '14. November 2026'
+                : 'November 14, 2026'
+          }</time
+        >
       </p>
       {
         page.sections.map(([title, body, label, href]) => (

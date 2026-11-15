@@ -1,10 +1,11 @@
 ---
 import { siteUrl } from '~/config/site';
 const { pathname } = Astro.props;
-const english = pathname.replace(/^\/de(?=\/)/, '');
+const english = pathname.replace(/^\/(?:de|pt-br)(?=\/)/, '');
 const german = '/de' + english;
 ---
 
 <link rel="alternate" hreflang="en" href={new URL(english, siteUrl).href} />
 <link rel="alternate" hreflang="de" href={new URL(german, siteUrl).href} />
+<link rel="alternate" hreflang="pt-BR" href={new URL('/pt-br' + english, siteUrl).href} />
 <link rel="alternate" hreflang="x-default" href={new URL(english, siteUrl).href} />

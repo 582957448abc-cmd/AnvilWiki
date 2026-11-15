@@ -1,4 +1,5 @@
 ---
+import { ptArticles, ptGuide } from '~/content/specials/ocean-pt-br';
 import { deArticles, deGuide } from '~/content/specials/ocean-de';
 import OceanLanguageLink from '~/components/ocean/OceanLanguageLink.astro';
 import OceanSiteFooter from '~/components/layout/OceanSiteFooter.astro';
@@ -6,7 +7,12 @@ import { articles as enArticles } from '~/content/specials/drink-the-ocean-guide
 import { siteUrl } from '~/config/site';
 
 const { locale } = Astro.props;
-const shareTitle = locale === 'de' ? 'Drink the Ocean spielen' : 'Play Drink the Ocean';
+const shareTitle =
+  locale === 'pt-BR'
+    ? 'Jogar Drink the Ocean'
+    : locale === 'de'
+      ? 'Drink the Ocean spielen'
+      : 'Play Drink the Ocean';
 const shareUrl = new URL(Astro.url.pathname, siteUrl).href;
 const encodedUrl = encodeURIComponent(shareUrl);
 const encodedTitle = encodeURIComponent(shareTitle);
@@ -25,28 +31,39 @@ const socialLinks = [
 const gameUrl =
   'https://playgama.com/export/game/drink-the-ocean?clid=p_6436b05e-8527-404f-b4a1-5417604a03b7';
 const controls =
-  locale === 'de'
+  locale === 'pt-BR'
     ? [
-        ['WASD', 'Laufen'],
-        ['Maus', 'Umsehen'],
-        ['Linke Maustaste', 'Zum Trinken halten'],
-        ['Leertaste', 'Springen'],
-        ['1 / 2 / 3', 'Werkzeug wechseln'],
-        ['T', 'Nach Hause'],
-        ['P', 'Einstellungen'],
-        ['Tab', 'Mauszeiger freigeben'],
+        ['WASD', 'Mover'],
+        ['Mouse', 'Olhar ao redor'],
+        ['Botão esquerdo', 'Segure para beber'],
+        ['Espaço', 'Pular'],
+        ['1 / 2 / 3', 'Trocar ferramenta'],
+        ['T', 'Voltar para casa'],
+        ['P', 'Configurações'],
+        ['Tab', 'Liberar o cursor'],
       ]
-    : [
-        ['WASD', 'Move'],
-        ['Mouse', 'Look around'],
-        ['Left click', 'Hold to drink'],
-        ['Space', 'Jump'],
-        ['1 / 2 / 3', 'Switch unlocked tools'],
-        ['T', 'Return home'],
-        ['P', 'Settings'],
-        ['Tab', 'Release the cursor'],
-      ];
-const articles = locale === 'de' ? deArticles : enArticles;
+    : locale === 'de'
+      ? [
+          ['WASD', 'Laufen'],
+          ['Maus', 'Umsehen'],
+          ['Linke Maustaste', 'Zum Trinken halten'],
+          ['Leertaste', 'Springen'],
+          ['1 / 2 / 3', 'Werkzeug wechseln'],
+          ['T', 'Nach Hause'],
+          ['P', 'Einstellungen'],
+          ['Tab', 'Mauszeiger freigeben'],
+        ]
+      : [
+          ['WASD', 'Move'],
+          ['Mouse', 'Look around'],
+          ['Left click', 'Hold to drink'],
+          ['Space', 'Jump'],
+          ['1 / 2 / 3', 'Switch unlocked tools'],
+          ['T', 'Return home'],
+          ['P', 'Settings'],
+          ['Tab', 'Release the cursor'],
+        ];
+const articles = locale === 'pt-BR' ? ptArticles : locale === 'de' ? deArticles : enArticles;
 ---
 
 <!doctype html>
@@ -57,57 +74,107 @@ const articles = locale === 'de' ? deArticles : enArticles;
     <meta name="robots" content="noindex" />
     <title>
       {
-        locale === 'de'
-          ? 'Drink the Ocean im Browser spielen'
-          : 'Play Drink the Ocean in Your Browser'
+        locale === 'pt-BR'
+          ? 'Jogar Drink the Ocean no navegador'
+          : locale === 'de'
+            ? 'Drink the Ocean im Browser spielen'
+            : 'Play Drink the Ocean in Your Browser'
       }
     </title>
   </head>
   <body>
     <header>
-      <a href="../">{locale === 'de' ? '← Zurück zur Spielübersicht' : '← Back to the guide'}</a>
+      <a href="../"
+        >{
+          locale === 'pt-BR'
+            ? '← Voltar ao guia'
+            : locale === 'de'
+              ? '← Zurück zur Spielübersicht'
+              : '← Back to the guide'
+        }</a
+      >
       <OceanLanguageLink locale={locale} />
     </header>
     <main>
       <div class="intro">
         <div>
-          <h1>{locale === 'de' ? 'Drink the Ocean spielen' : 'Play Drink the Ocean'}</h1>
+          <h1>
+            {
+              locale === 'pt-BR'
+                ? 'Jogar Drink the Ocean'
+                : locale === 'de'
+                  ? 'Drink the Ocean spielen'
+                  : 'Play Drink the Ocean'
+            }
+          </h1>
           <p>
             {
-              locale === 'de'
-                ? 'Kostenloses Browserspiel von Playgama. Beim ersten Start kann das Laden etwas dauern.'
-                : 'Free browser game hosted by Playgama. The first load may take a moment.'
+              locale === 'pt-BR'
+                ? 'Jogo de navegador gratuito hospedado pela Playgama. O primeiro carregamento pode demorar um pouco.'
+                : locale === 'de'
+                  ? 'Kostenloses Browserspiel von Playgama. Beim ersten Start kann das Laden etwas dauern.'
+                  : 'Free browser game hosted by Playgama. The first load may take a moment.'
             }
           </p>
         </div>
         <button type="button" data-fullscreen hidden
-          >{locale === 'de' ? 'Vollbild' : 'Fullscreen'}</button
+          >{locale === 'pt-BR' ? 'Tela cheia' : locale === 'de' ? 'Vollbild' : 'Fullscreen'}</button
         >
       </div>
       <div class="player" id="player">
         <iframe
           src={gameUrl}
-          title={locale === 'de' ? 'Drink the Ocean im Browser' : 'Drink the Ocean browser game'}
+          title={locale === 'pt-BR'
+            ? 'Drink the Ocean no navegador'
+            : locale === 'de'
+              ? 'Drink the Ocean im Browser'
+              : 'Drink the Ocean browser game'}
           allow="autoplay; fullscreen; gamepad"
           allowfullscreen></iframe>
       </div>
       <div class="share">
         <button type="button" data-share aria-haspopup="dialog"
-          >{locale === 'de' ? 'Spiel teilen' : 'Share game'}</button
+          >{
+            locale === 'pt-BR'
+              ? 'Compartilhar jogo'
+              : locale === 'de'
+                ? 'Spiel teilen'
+                : 'Share game'
+          }</button
         >
       </div>
       <dialog class="share-dialog" aria-labelledby="share-title">
         <div class="share-heading">
-          <h2 id="share-title">{locale === 'de' ? 'Dieses Spiel teilen' : 'Share this game'}</h2>
+          <h2 id="share-title">
+            {
+              locale === 'pt-BR'
+                ? 'Compartilhar este jogo'
+                : locale === 'de'
+                  ? 'Dieses Spiel teilen'
+                  : 'Share this game'
+            }
+          </h2>
           <form method="dialog">
             <button
               class="share-close"
-              aria-label={locale === 'de' ? 'Teilen schließen' : 'Close share panel'}
+              aria-label={locale === 'pt-BR'
+                ? 'Fechar compartilhamento'
+                : locale === 'de'
+                  ? 'Teilen schließen'
+                  : 'Close share panel'}
               autofocus>×</button
             >
           </form>
         </div>
-        <p>{locale === 'de' ? 'In sozialen Medien teilen' : 'Share on social media'}</p>
+        <p>
+          {
+            locale === 'pt-BR'
+              ? 'Compartilhar nas redes sociais'
+              : locale === 'de'
+                ? 'In sozialen Medien teilen'
+                : 'Share on social media'
+          }
+        </p>
         <ul class="social-links">
           {
             socialLinks.map(([name, href]) => (
@@ -120,26 +187,45 @@ const articles = locale === 'de' ? deArticles : enArticles;
           }
           <li>
             <a href={'mailto:?subject=' + encodedTitle + '&body=' + encodedUrl}
-              >{locale === 'de' ? 'E-Mail' : 'Email'}</a>
+              >{locale === 'pt-BR' ? 'E-mail' : locale === 'de' ? 'E-Mail' : 'Email'}</a
+            >
           </li>
         </ul>
-        <label for="share-url">{locale === 'de' ? 'Oder Link kopieren' : 'Or copy link'}</label>
+        <label for="share-url"
+          >{
+            locale === 'pt-BR'
+              ? 'Ou copie o link'
+              : locale === 'de'
+                ? 'Oder Link kopieren'
+                : 'Or copy link'
+          }</label
+        >
         <div class="copy-row">
           <input id="share-url" type="url" value={shareUrl} readonly />
-          <button type="button" data-copy>{locale === 'de' ? 'Kopieren' : 'Copy'}</button>
+          <button type="button" data-copy
+            >{locale === 'pt-BR' ? 'Copiar' : locale === 'de' ? 'Kopieren' : 'Copy'}</button
+          >
         </div>
         <p role="status" data-share-status></p>
       </dialog>
       <p class="hint">
         {
-          locale === 'de'
-            ? 'Klicke ins Spielfeld, damit es Tastatur und Maus übernimmt. Mit Tab gibst du den Mauszeiger frei.'
-            : 'Click inside the game to focus it. Press Tab to release the mouse and return to the page.'
+          locale === 'pt-BR'
+            ? 'Clique dentro do jogo para ativar os controles. Pressione Tab para liberar o cursor e voltar à página.'
+            : locale === 'de'
+              ? 'Klicke ins Spielfeld, damit es Tastatur und Maus übernimmt. Mit Tab gibst du den Mauszeiger frei.'
+              : 'Click inside the game to focus it. Press Tab to release the mouse and return to the page.'
         }
       </p>
       <section aria-labelledby="controls-title">
         <h2 id="controls-title">
-          {locale === 'de' ? 'Steuerung mit Tastatur und Maus' : 'Keyboard and mouse controls'}
+          {
+            locale === 'pt-BR'
+              ? 'Controles de teclado e mouse'
+              : locale === 'de'
+                ? 'Steuerung mit Tastatur und Maus'
+                : 'Keyboard and mouse controls'
+          }
         </h2>
         <dl>
           {
@@ -158,12 +244,18 @@ const articles = locale === 'de' ? deArticles : enArticles;
       </section>
       <section aria-labelledby="guide-title">
         <h2 id="guide-title">
-          {locale === 'de' ? 'So spielst du Drink the Ocean' : 'How to play Drink the Ocean'}
+          {
+            locale === 'pt-BR'
+              ? 'Como jogar Drink the Ocean'
+              : locale === 'de'
+                ? 'So spielst du Drink the Ocean'
+                : 'How to play Drink the Ocean'
+          }
         </h2>
         <ol class="steps">
           {
-            locale === 'de' ? (
-              deGuide.steps.map(([title, body]) => (
+            locale !== 'en' ? (
+              (locale === 'pt-BR' ? ptGuide : deGuide).steps.map(([title, body]) => (
                 <li>
                   <strong>{title}</strong>
                   {body}
@@ -193,13 +285,22 @@ const articles = locale === 'de' ? deArticles : enArticles;
         </ol>
         <p>
           {
-            locale === 'de'
-              ? 'Spiele auf dem Handy im Querformat. Nutze die Touch-Steuerung zum Laufen und halte am Wasser die Taste DRINK gedrückt.'
-              : 'On a touch device, use the on-screen movement and Drink controls if the game displays\n          them.'
+            locale === 'pt-BR'
+              ? 'No celular, jogue no modo paisagem. Use os controles na tela para se mover e segure DRINK para beber.'
+              : locale === 'de'
+                ? 'Spiele auf dem Handy im Querformat. Nutze die Touch-Steuerung zum Laufen und halte am Wasser die Taste DRINK gedrückt.'
+                : 'On a touch device, use the on-screen movement and Drink controls if the game displays\n          them.'
           }
         </p>
       </section>
-      <nav class="guides" aria-label={locale === 'de' ? 'Weitere Anleitungen' : 'More guides'}>
+      <nav
+        class="guides"
+        aria-label={locale === 'pt-BR'
+          ? 'Mais guias'
+          : locale === 'de'
+            ? 'Weitere Anleitungen'
+            : 'More guides'}
+      >
         {
           Object.entries(articles).map(([slug, article]) => (
             <a href={'../' + slug + '/'}>{article.title} →</a>
@@ -222,7 +323,11 @@ const articles = locale === 'de' ? deArticles : enArticles;
         try {
           await navigator.clipboard.writeText(shareInput.value);
           shareStatus.textContent =
-            document.documentElement.lang === 'de' ? 'Link kopiert' : 'Link copied';
+            document.documentElement.lang === 'pt-BR'
+              ? 'Link copiado'
+              : document.documentElement.lang === 'de'
+                ? 'Link kopiert'
+                : 'Link copied';
         } catch {
           shareInput.select();
           shareStatus.textContent =

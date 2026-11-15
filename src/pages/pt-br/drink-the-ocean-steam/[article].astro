@@ -1,0 +1,12 @@
+---
+import OceanArticle from '~/components/ocean/OceanArticle.astro';
+import { ptArticles } from '~/content/specials/ocean-pt-br';
+export function getStaticPaths() {
+  return Object.entries(ptArticles).map(([slug, content]) => ({
+    params: { article: slug },
+    props: { content },
+  }));
+}
+---
+
+<OceanArticle locale="pt-BR" content={Astro.props.content} />

@@ -1,15 +1,26 @@
 ---
+import { ptInfo } from '~/content/specials/ocean-pt-br';
 import { deInfo } from '~/content/specials/ocean-de';
 import { siteInformation } from '~/content/specials/site-information';
 const { locale = 'en' } = Astro.props;
 ---
 
 <footer class="site-info-footer">
-  <nav aria-label={locale === 'de' ? 'Informationen zur Website' : 'Site information'}>
+  <nav
+    aria-label={locale === 'pt-BR'
+      ? 'Informações do site'
+      : locale === 'de'
+        ? 'Informationen zur Website'
+        : 'Site information'}
+  >
     {
-      Object.entries(locale === 'de' ? deInfo : siteInformation).map(([href, item]) => (
-        <a href={(locale === 'de' ? '/de' : '') + href}>{item.title}</a>
-      ))
+      Object.entries(locale === 'pt-BR' ? ptInfo : locale === 'de' ? deInfo : siteInformation).map(
+        ([href, item]) => (
+          <a href={(locale === 'pt-BR' ? '/pt-br' : locale === 'de' ? '/de' : '') + href}>
+            {item.title}
+          </a>
+        ),
+      )
     }
   </nav>
 </footer>

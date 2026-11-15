@@ -1,0 +1,12 @@
+---
+import OceanInfo from '~/components/ocean/OceanInfo.astro';
+import { ptInfo } from '~/content/specials/ocean-pt-br';
+export function getStaticPaths() {
+  return Object.entries(ptInfo).map(([slug, page]) => ({
+    params: { information: slug.slice(1, -1) },
+    props: { page },
+  }));
+}
+---
+
+<OceanInfo locale="pt-BR" page={Astro.props.page} />

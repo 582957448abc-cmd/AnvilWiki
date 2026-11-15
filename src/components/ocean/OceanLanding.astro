@@ -1,4 +1,5 @@
 ---
+import { ptArticles, ptGuide } from '~/content/specials/ocean-pt-br';
 import { deArticles, deGuide } from '~/content/specials/ocean-de';
 import OceanLanguageLink from '~/components/ocean/OceanLanguageLink.astro';
 import OceanAlternates from '~/components/ocean/OceanAlternates.astro';
@@ -7,8 +8,8 @@ import { siteUrl as siteOrigin } from '~/config/site';
 import { articles as enArticles } from '~/content/specials/drink-the-ocean-guides';
 import { guide as enGuide } from '~/content/specials/drink-the-ocean';
 const { locale } = Astro.props;
-const articles = locale === 'de' ? deArticles : enArticles;
-const guide = locale === 'de' ? deGuide : enGuide;
+const articles = locale === 'pt-BR' ? ptArticles : locale === 'de' ? deArticles : enArticles;
+const guide = locale === 'pt-BR' ? ptGuide : locale === 'de' ? deGuide : enGuide;
 ---
 
 <!doctype html>
@@ -32,10 +33,21 @@ const guide = locale === 'de' ? deGuide : enGuide;
     <header class="site-bar">
       <div class="bar-inner">
         <a class="wordmark" href="./">Drink The Ocean</a>
-        <nav aria-label={locale === 'de' ? 'Auf dieser Seite' : 'On this page'}>
+        <nav
+          aria-label={locale === 'pt-BR'
+            ? 'Nesta página'
+            : locale === 'de'
+              ? 'Auf dieser Seite'
+              : 'On this page'}
+        >
           <OceanLanguageLink locale={locale} />
-          <a href="#how-to-play">{locale === 'de' ? 'Spielanleitung' : 'How to play'}</a>
-          <a href="#preview">{locale === 'de' ? 'Video' : 'Media'}</a>
+          <a href="#how-to-play"
+            >{
+              locale === 'pt-BR' ? 'Como jogar' : locale === 'de' ? 'Spielanleitung' : 'How to play'
+            }</a
+          >
+          <a href="#preview">{locale === 'pt-BR' ? 'Vídeo' : locale === 'de' ? 'Video' : 'Media'}</a
+          >
           <a href="#faq">FAQ</a>
         </nav>
       </div>
@@ -45,53 +57,89 @@ const guide = locale === 'de' ? deGuide : enGuide;
         <img
           class="cover"
           src={guide.media + 'cover.webp'}
-          alt={locale === 'de'
-            ? 'Illustration: Ein Abenteurer trinkt mit einem gestreiften Strohhalm aus einer Lagune'
-            : 'Illustration of an island explorer drinking from a turquoise lagoon through a striped straw'}
+          alt={locale === 'pt-BR'
+            ? 'Ilustração de um explorador bebendo de uma lagoa com um canudo listrado'
+            : locale === 'de'
+              ? 'Illustration: Ein Abenteurer trinkt mit einem gestreiften Strohhalm aus einer Lagune'
+              : 'Illustration of an island explorer drinking from a turquoise lagoon through a striped straw'}
           fetchpriority="high"
         />
         <div class="hero-copy">
           <h1 id="game-title">{guide.heading}</h1>
           <p class="tagline">
             {
-              locale === 'de'
-                ? 'Spiele Drink the Ocean kostenlos im Browser.'
-                : 'Play Drink the Ocean free in your browser.'
+              locale === 'pt-BR'
+                ? 'Jogue Drink the Ocean grátis no navegador.'
+                : locale === 'de'
+                  ? 'Spiele Drink the Ocean kostenlos im Browser.'
+                  : 'Play Drink the Ocean free in your browser.'
             }
           </p>
           <p class="steam-status">
             {
-              locale === 'de'
-                ? 'Ein Starttermin auf Steam wurde noch nicht angekündigt.'
-                : 'No Steam release date has been announced.'
+              locale === 'pt-BR'
+                ? 'Ainda não há data anunciada para o Steam.'
+                : locale === 'de'
+                  ? 'Ein Starttermin auf Steam wurde noch nicht angekündigt.'
+                  : 'No Steam release date has been announced.'
             }
           </p>
           <div class="hero-actions">
             <a class="play-button" href="./play/" aria-describedby="player-note"
-              >{locale === 'de' ? 'Jetzt spielen' : 'Play Now'} <span aria-hidden="true">→</span></a
+              >{locale === 'pt-BR' ? 'Jogar agora' : locale === 'de' ? 'Jetzt spielen' : 'Play Now'}
+              <span aria-hidden="true">→</span></a
             >
             <a class="trailer-link" href="#preview"
-              >{locale === 'de' ? 'Gameplay ansehen' : 'Watch gameplay'}</a
+              >{
+                locale === 'pt-BR'
+                  ? 'Ver gameplay'
+                  : locale === 'de'
+                    ? 'Gameplay ansehen'
+                    : 'Watch gameplay'
+              }</a
             >
           </div>
           <p class="player-note" id="player-note">
-            {locale === 'de' ? 'Kein Download nötig.' : 'No download required.'}
+            {
+              locale === 'pt-BR'
+                ? 'Sem precisar baixar.'
+                : locale === 'de'
+                  ? 'Kein Download nötig.'
+                  : 'No download required.'
+            }
           </p>
         </div>
       </section>
       <aside
         class="game-panel"
-        aria-label={locale === 'de' ? 'Spiel und Plattform' : 'Game and platform information'}
+        aria-label={locale === 'pt-BR'
+          ? 'Jogo e plataforma'
+          : locale === 'de'
+            ? 'Spiel und Plattform'
+            : 'Game and platform information'}
       >
         <dl>
           <div>
-            <dt>{locale === 'de' ? 'Genre' : 'Genre'}</dt><dd>
-              {locale === 'de' ? 'Incremental-Spiel' : 'Incremental'}
+            <dt>{locale === 'pt-BR' ? 'Gênero' : locale === 'de' ? 'Genre' : 'Genre'}</dt><dd>
+              {
+                locale === 'pt-BR'
+                  ? 'Jogo incremental'
+                  : locale === 'de'
+                    ? 'Incremental-Spiel'
+                    : 'Incremental'
+              }
             </dd>
           </div>
           <div>
-            <dt>{locale === 'de' ? 'Steuerung' : 'Input'}</dt><dd>
-              {locale === 'de' ? 'Tastatur und Maus' : 'Keyboard and mouse'}
+            <dt>{locale === 'pt-BR' ? 'Controles' : locale === 'de' ? 'Steuerung' : 'Input'}</dt><dd
+            >
+              {
+                locale === 'pt-BR'
+                  ? 'Teclado, mouse e toque'
+                  : locale === 'de'
+                    ? 'Tastatur und Maus'
+                    : 'Keyboard and mouse'
+              }
             </dd>
           </div>
           {
@@ -108,19 +156,25 @@ const guide = locale === 'de' ? deGuide : enGuide;
       </aside>
       <div class="editorial">
         <section aria-labelledby="about-title">
-          <h2 id="about-title">{locale === 'de' ? 'Über das Spiel' : 'About'}</h2>
+          <h2 id="about-title">
+            {locale === 'pt-BR' ? 'Sobre o jogo' : locale === 'de' ? 'Über das Spiel' : 'About'}
+          </h2>
           <p>
             <strong
               >{
-                locale === 'de'
-                  ? 'Eine Steam-Version ist noch nicht bestätigt.'
-                  : 'No Steam release has been confirmed.'
+                locale === 'pt-BR'
+                  ? 'A versão para Steam ainda não foi confirmada.'
+                  : locale === 'de'
+                    ? 'Eine Steam-Version ist noch nicht bestätigt.'
+                    : 'No Steam release has been confirmed.'
               }</strong
             >
             {
-              locale === 'de'
-                ? 'Du kannst die Browserfassung hier spielen.'
-                : 'A desktop browser edition has been listed.'
+              locale === 'pt-BR'
+                ? 'Você pode jogar a versão de navegador aqui.'
+                : locale === 'de'
+                  ? 'Du kannst die Browserfassung hier spielen.'
+                  : 'A desktop browser edition has been listed.'
             }
           </p>
           <p>
@@ -134,9 +188,11 @@ const guide = locale === 'de' ? deGuide : enGuide;
         <section id="how-to-play" class="section">
           <h2>
             {
-              locale === 'de'
-                ? 'So spielst du Drink the Ocean'
-                : 'How to Play the Drink the Ocean Game'
+              locale === 'pt-BR'
+                ? 'Como jogar Drink the Ocean'
+                : locale === 'de'
+                  ? 'So spielst du Drink the Ocean'
+                  : 'How to Play the Drink the Ocean Game'
             }
           </h2>
           <ol>
@@ -153,14 +209,24 @@ const guide = locale === 'de' ? deGuide : enGuide;
           </ol>
           <p class="note">
             {
-              locale === 'de'
-                ? 'Miss beim ersten Upgrade, was mehr Zeit kostet: das Trinken am Ufer oder der Rückweg zur Presse.'
-                : 'For your first upgrade, compare how long it takes to fill up with how long it takes to\n            walk back to the PRESS.'
+              locale === 'pt-BR'
+                ? 'Para escolher a primeira melhoria, veja o que demora mais: encher a barriga ou voltar à prensa.'
+                : locale === 'de'
+                  ? 'Miss beim ersten Upgrade, was mehr Zeit kostet: das Trinken am Ufer oder der Rückweg zur Presse.'
+                  : 'For your first upgrade, compare how long it takes to fill up with how long it takes to\n            walk back to the PRESS.'
             }
           </p>
         </section>
         <section id="preview" class="section media-section" aria-labelledby="preview-title">
-          <h2 id="preview-title">{locale === 'de' ? 'Gameplay-Video' : 'Gameplay footage'}</h2>
+          <h2 id="preview-title">
+            {
+              locale === 'pt-BR'
+                ? 'Vídeo de gameplay'
+                : locale === 'de'
+                  ? 'Gameplay-Video'
+                  : 'Gameplay footage'
+            }
+          </h2>
           <video
             data-gameplay-video
             controls
@@ -168,16 +234,24 @@ const guide = locale === 'de' ? deGuide : enGuide;
             playsinline
             preload="none"
             poster={guide.media + 'poster.webp'}
-            aria-label={locale === 'de'
-              ? 'Gameplay-Video zu Drink the Ocean'
-              : 'Drink the Ocean gameplay footage'}
+            aria-label={locale === 'pt-BR'
+              ? 'Vídeo de gameplay de Drink the Ocean'
+              : locale === 'de'
+                ? 'Gameplay-Video zu Drink the Ocean'
+                : 'Drink the Ocean gameplay footage'}
           >
             <source src={guide.media + 'gameplay.mp4'} type="video/mp4" />
           </video>
         </section>
         <section class="section" aria-labelledby="more-guides">
           <h2 id="more-guides">
-            {locale === 'de' ? 'Anleitungen zu Drink the Ocean' : 'Drink the Ocean walkthroughs'}
+            {
+              locale === 'pt-BR'
+                ? 'Guias de Drink the Ocean'
+                : locale === 'de'
+                  ? 'Anleitungen zu Drink the Ocean'
+                  : 'Drink the Ocean walkthroughs'
+            }
           </h2>
           <ul>
             {
@@ -190,7 +264,15 @@ const guide = locale === 'de' ? deGuide : enGuide;
           </ul>
         </section>
         <section id="faq" class="section">
-          <h2>{locale === 'de' ? 'Häufige Fragen zu Drink the Ocean' : 'Drink the Ocean FAQ'}</h2>
+          <h2>
+            {
+              locale === 'pt-BR'
+                ? 'Perguntas frequentes sobre Drink the Ocean'
+                : locale === 'de'
+                  ? 'Häufige Fragen zu Drink the Ocean'
+                  : 'Drink the Ocean FAQ'
+            }
+          </h2>
           {
             guide.faq.map(([question, answer]) => (
               <details>
@@ -205,14 +287,18 @@ const guide = locale === 'de' ? deGuide : enGuide;
       </div>
       <aside
         class="guide-ad editorial"
-        aria-label={locale === 'de' ? 'Werbung' : 'Advertisement'}
+        aria-label={locale === 'pt-BR'
+          ? 'Publicidade'
+          : locale === 'de'
+            ? 'Werbung'
+            : 'Advertisement'}
         data-nosnippet
         data-pagefind-ignore
       >
-        <p>{locale === 'de' ? 'Werbung' : 'Advertisement'}</p>
+        <p>{locale === 'pt-BR' ? 'Publicidade' : locale === 'de' ? 'Werbung' : 'Advertisement'}</p>
         <iframe
           src="/ads/ocean-native.html"
-          title={locale === 'de' ? 'Werbung' : 'Advertisement'}
+          title={locale === 'pt-BR' ? 'Publicidade' : locale === 'de' ? 'Werbung' : 'Advertisement'}
           loading="lazy"
           sandbox="allow-scripts"
           width="760"
